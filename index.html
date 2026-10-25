@@ -1,271 +1,43 @@
-<!DOCTYPE html>
-<html lang="de">
+<!doctype html>
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="NEXUS GAMING — entdecke Spiele und werde Teil der Community.">
-  <title>NEXUS GAMING | Enter the Game</title>
-  <style>
-    :root {
-      --bg: #050711;
-      --panel: #0d1224;
-      --purple: #a855f7;
-      --pink: #ec4899;
-      --cyan: #22d3ee;
-      --text: #f5f7ff;
-      --muted: #b5bdd6;
-      --line: rgba(107, 124, 255, .35);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(ellipse at 15% 5%, rgba(94, 35, 190, .18), transparent 38%),
-        radial-gradient(ellipse at 90% 35%, rgba(0, 142, 255, .12), transparent 35%),
-        var(--bg);
-      line-height: 1.6;
-    }
-    a { color: inherit; text-decoration: none; }
-    .wrap { width: min(1120px, 90%); margin: auto; }
-
-    header {
-      position: sticky; top: 0; z-index: 10;
-      background: rgba(5, 7, 17, .88);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--line);
-    }
-    .nav {
-      min-height: 74px; display: flex; align-items: center;
-      justify-content: space-between; gap: 24px;
-    }
-    .brand { font-size: 1.25rem; font-weight: 900; letter-spacing: .04em; }
-    .brand span { color: var(--purple); text-shadow: 0 0 18px rgba(168,85,247,.8); }
-    nav { display: flex; gap: 24px; flex-wrap: wrap; }
-    nav a { color: var(--muted); font-size: .92rem; transition: color .2s; }
-    nav a:hover { color: var(--cyan); }
-
-    .hero {
-      min-height: 490px; display: grid; align-items: center;
-      position: relative; overflow: hidden;
-      border-bottom: 1px solid var(--line);
-      background:
-        linear-gradient(90deg, rgba(5,7,17,.98) 0%, rgba(5,7,17,.83) 50%, rgba(5,7,17,.25) 100%),
-        radial-gradient(ellipse at 78% 45%, rgba(124,58,237,.55), transparent 24%),
-        radial-gradient(ellipse at 88% 30%, rgba(34,211,238,.28), transparent 32%),
-        repeating-linear-gradient(125deg, transparent 0 35px, rgba(99,102,241,.08) 36px 38px);
-    }
-    .hero::after {
-      content: ""; position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(transparent 96%, rgba(34,211,238,.2));
-    }
-    .hero-content { position: relative; z-index: 1; padding: 82px 0; max-width: 690px; }
-    .eyebrow { color: var(--cyan); text-transform: uppercase; letter-spacing: .24em; font-size: .75rem; font-weight: 800; }
-    h1 { font-size: clamp(2.8rem, 7vw, 5.6rem); line-height: .98; margin: 18px 0; letter-spacing: -.045em; }
-    h1 span {
-      display: block; color: var(--purple);
-      text-shadow: 0 0 28px rgba(168,85,247,.55);
-    }
-    .hero p { max-width: 530px; color: var(--muted); font-size: 1.08rem; margin-bottom: 28px; }
-    .actions { display: flex; flex-wrap: wrap; gap: 14px; }
-    .btn {
-      display: inline-flex; justify-content: center; align-items: center; gap: 9px;
-      padding: 13px 20px; border-radius: 8px; font-weight: 800; font-size: .9rem;
-      border: 1px solid var(--purple); transition: transform .2s, box-shadow .2s, background .2s;
-    }
-    .btn.primary { background: linear-gradient(100deg, #9333ea, #6d28d9); box-shadow: 0 0 24px rgba(147,51,234,.28); }
-    .btn.secondary { border-color: var(--cyan); background: rgba(5,7,17,.5); }
-    .btn:hover { transform: translateY(-3px); box-shadow: 0 0 25px rgba(34,211,238,.25); }
-
-    section { padding: 68px 0; }
-    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 26px; }
-    .section-head h2, .about h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); line-height: 1.15; }
-    .section-head h2 span, .about h2 span { color: var(--purple); }
-    .kicker { color: var(--pink); font-size: .75rem; letter-spacing: .22em; font-weight: 900; text-transform: uppercase; margin-bottom: 8px; }
-    .text-link { color: var(--cyan); font-size: .9rem; font-weight: 700; white-space: nowrap; }
-    .games-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .game-card {
-      overflow: hidden; border: 1px solid var(--line); border-radius: 13px;
-      background: linear-gradient(145deg, rgba(17,24,48,.95), rgba(8,11,25,.96));
-      transition: transform .25s, border-color .25s, box-shadow .25s;
-    }
-    .game-card:hover { transform: translateY(-6px); border-color: var(--purple); box-shadow: 0 10px 35px rgba(88,28,135,.2); }
-    .game-art {
-      height: 155px; display: grid; place-items: center; position: relative; overflow: hidden;
-      font-size: 3.4rem;
-    }
-    .game-art::before { content: ""; position: absolute; inset: 0; opacity: .85; }
-    .art-action::before { background: radial-gradient(circle at 50% 20%, #a34c23, transparent 35%), linear-gradient(135deg,#172e43,#070b16 65%); }
-    .art-adventure::before { background: radial-gradient(circle at 70% 25%, #a8e5ff, transparent 20%), linear-gradient(135deg,#316e78,#12253e 60%,#090c1b); }
-    .art-racing::before { background: radial-gradient(circle at 70% 40%, #f72585, transparent 25%), linear-gradient(135deg,#25105a,#071a3b 65%,#080a17); }
-    .game-art span { position: relative; filter: drop-shadow(0 0 14px rgba(255,255,255,.45)); }
-    .tag { position: absolute; top: 13px; left: 13px; z-index: 1; background: var(--purple); padding: 4px 10px; border-radius: 99px; font-size: .68rem; font-weight: 900; text-transform: uppercase; }
-    .game-info { padding: 18px; }
-    .game-info h3 { font-size: 1.15rem; margin-bottom: 7px; }
-    .game-info p { color: var(--muted); font-size: .9rem; min-height: 48px; }
-    .card-bottom { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 18px; font-size: .82rem; color: #d6def8; }
-    .small-btn { border: 1px solid var(--cyan); padding: 6px 10px; border-radius: 7px; color: var(--cyan); }
-
-    .features {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
-      border: 1px solid var(--line); border-radius: 13px; overflow: hidden;
-      background: var(--line);
-    }
-    .feature { background: rgba(8,12,28,.96); padding: 25px 18px; text-align: center; }
-    .feature .icon { font-size: 1.8rem; color: var(--purple); margin-bottom: 9px; }
-    .feature h3 { font-size: .94rem; margin-bottom: 6px; }
-    .feature p { color: var(--muted); font-size: .82rem; }
-
-    .about {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center;
-      border: 1px solid var(--line); border-radius: 14px; padding: 34px;
-      background: linear-gradient(110deg, rgba(16,20,43,.95), rgba(11,12,31,.75));
-    }
-    .about p { color: var(--muted); margin: 16px 0 22px; }
-    .community-art {
-      min-height: 220px; border-radius: 10px; display: grid; place-items: center;
-      background: radial-gradient(ellipse at center, rgba(168,85,247,.4), transparent 45%),
-        repeating-linear-gradient(135deg, #111936 0 16px, #0a0e20 16px 32px);
-      border: 1px solid rgba(168,85,247,.35); font-size: clamp(2rem, 6vw, 4rem); text-align: center;
-    }
-    .community-art span { text-shadow: 0 0 25px var(--purple); }
-
-    footer { margin-top: 68px; padding: 28px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
-    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
-    .socials { display: flex; gap: 15px; }
-    .socials a:hover { color: var(--cyan); }
-    .top { color: var(--purple); font-size: 1.4rem; }
-
-    @media (max-width: 800px) {
-      .games-grid { grid-template-columns: 1fr 1fr; }
-      .features { grid-template-columns: 1fr 1fr; }
-      .about { grid-template-columns: 1fr; }
-      .nav { padding: 15px 0; align-items: flex-start; flex-direction: column; gap: 12px; }
-      nav { gap: 16px; }
-    }
-    @media (max-width: 540px) {
-      .games-grid { grid-template-columns: 1fr; }
-      .section-head { align-items: flex-start; flex-direction: column; }
-      .hero { min-height: auto; }
-      .hero-content { padding: 68px 0; }
-      .about { padding: 23px; }
-      .features { grid-template-columns: 1fr 1fr; }
-      nav { gap: 12px; }
-      nav a { font-size: .83rem; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { transition: none !important; }
-    }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXUS GAMING</title>
+<style>
+:root{--bg:#050817;--panel:#0b1229;--purple:#b22cff;--blue:#087cff;--text:#f5f7ff;--muted:#bac8e8}
+*{box-sizing:border-box;scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at top,#151447,var(--bg) 55%);color:var(--text);font-family:Arial,sans-serif}a{color:inherit;text-decoration:none}
+header{position:sticky;top:0;z-index:5;background:#050817ed;border-bottom:1px solid #263b77;backdrop-filter:blur(12px)}.nav{max-width:1150px;margin:auto;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px}.logo{font-weight:900;font-size:24px;white-space:nowrap}.logo span,h1 span{color:#b22cff}nav{display:flex;gap:20px}nav a:hover{color:#d05cff}.btn,button{cursor:pointer}.btn{display:inline-block;padding:12px 17px;border-radius:10px;background:linear-gradient(110deg,#b21cff,#5634ff);border:1px solid #b22cff;color:white;font-weight:bold}.btn.alt{background:#071126;border-color:#087cff}.menu{display:none}
+.hero{min-height:380px;display:flex;align-items:center;background:linear-gradient(90deg,#050817 0%,#050817df 36%,#05081720 100%),url('https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1800&q=85') center/cover;border-bottom:1px solid #25458c}.hero-inner{max-width:1150px;width:100%;margin:auto;padding:55px 22px}.eyebrow,.kicker{color:#d34aff;font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:bold}h1{font-size:clamp(44px,7vw,82px);margin:12px 0}h1 span{background:linear-gradient(90deg,#e238ff,#3685ff);color:transparent;background-clip:text}.hero p{max-width:520px;line-height:1.7;color:#d5e0ff}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+section{max-width:1150px;margin:auto;padding:36px 22px;scroll-margin-top:80px}.heading{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:18px}h2{margin:8px 0;font-size:clamp(25px,3vw,35px)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card,.game{border:1px solid #23488f;border-radius:12px;overflow:hidden;background:linear-gradient(145deg,#0c1530,#070b19);transition:.2s}.card:hover,.game:hover{transform:translateY(-4px);border-color:#b22cff;box-shadow:0 8px 25px #6320a040}.card img{width:100%;height:180px;object-fit:cover;display:block}.body{padding:17px}.body p,.popular p,.community p{color:var(--muted);line-height:1.6;font-size:14px}.small{padding:9px 12px;border:1px solid #345db5;border-radius:8px;background:#080f25;color:white}.features{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:22px 0;border:1px solid #23458b;border-radius:12px;padding:22px 10px;background:#080e20}.feature{text-align:center;padding:8px;border-right:1px solid #26345c}.feature:last-child{border:0}.feature b{display:block;margin:8px 0}.feature p{font-size:12px;color:var(--muted);line-height:1.5}.popular{display:grid;grid-template-columns:1fr 2fr;gap:20px;border:1px solid #23458b;border-radius:12px;padding:22px;background:#070d20}.games{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.game img{width:100%;height:100px;object-fit:cover;display:block}.game div{padding:10px;font-weight:bold;font-size:13px}.game small{display:block;color:#a9b9e3;font-weight:normal;margin-top:5px}.community{margin-top:20px;padding:25px;border:1px solid #49409b;border-radius:12px;background:linear-gradient(100deg,#15103c,#07142c)}footer{border-top:1px solid #263b77;padding:24px;color:#9fb0dc;font-size:13px}.footer{max-width:1150px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.modal{display:none;position:fixed;z-index:20;inset:0;background:#02040de8;justify-content:center;align-items:flex-start;padding:12vh 20px}.modal.open{display:flex}.box{max-width:560px;width:100%;background:#0b1229;border:1px solid #8b35e9;border-radius:14px;padding:22px}.modalhead{display:flex;justify-content:space-between;align-items:center}.close{background:none;color:white;border:0;font-size:28px}.search{width:100%;padding:13px;margin:14px 0;background:#050918;border:1px solid #394a82;border-radius:8px;color:white}#results a{display:block;padding:11px;border-bottom:1px solid #26345c;color:#dce5ff}
+@media(max-width:760px){nav{display:none;position:absolute;top:60px;left:0;right:0;background:#060a1c;padding:20px;flex-direction:column}nav.open{display:flex}.menu{display:block;background:#0b1229;color:white;border:1px solid #354779;border-radius:8px;padding:8px}.nav>.btn{display:none}.grid{grid-template-columns:1fr}.card img{height:220px}.features{grid-template-columns:repeat(2,1fr)}.feature:nth-child(2){border:0}.popular{grid-template-columns:1fr}.games{grid-template-columns:repeat(2,1fr)}.hero{min-height:420px}.hero-inner{padding:45px 22px}}
+</style>
 </head>
 <body>
-  <header>
-    <div class="wrap nav">
-      <a class="brand" href="#home" aria-label="NEXUS GAMING Startseite">◆ NEXUS <span>GAMING</span></a>
-      <nav aria-label="Hauptnavigation">
-        <a href="#home">Home</a>
-        <a href="#games">Spiele</a>
-        <a href="#community">Community</a>
-        <a href="#about">Über uns</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero" id="home">
-      <div class="wrap">
-        <div class="hero-content">
-          <div class="eyebrow">Willkommen in der nächsten Welt</div>
-          <h1>NEXUS <span>GAMING</span></h1>
-          <p>Mehr als nur ein Spiel — es ist eine Community. Entdecke neue Welten, finde deine nächsten Lieblingsspiele und starte dein Abenteuer.</p>
-          <div class="actions">
-            <a class="btn primary" href="#games">🎮 Spiele entdecken</a>
-            <a class="btn secondary" href="#about">Mehr erfahren ↗</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="games">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <div class="kicker">Unsere Auswahl</div>
-            <h2>Entdecke deine <span>Favoriten</span></h2>
-          </div>
-          <a class="text-link" href="#community">Zur Community →</a>
-        </div>
-
-        <div class="games-grid">
-          <article class="game-card">
-            <div class="game-art art-action"><span class="tag">Action</span><span aria-hidden="true">⚔️</span></div>
-            <div class="game-info">
-              <h3>Action & Shooter</h3>
-              <p>Rasante Kämpfe, Teamwork und spannende Herausforderungen.</p>
-              <div class="card-bottom"><span>★ Für Action-Fans</span><a class="small-btn" href="#community">Entdecken ↗</a></div>
-            </div>
-          </article>
-          <article class="game-card">
-            <div class="game-art art-adventure"><span class="tag">Adventure</span><span aria-hidden="true">🌌</span></div>
-            <div class="game-info">
-              <h3>Abenteuer</h3>
-              <p>Erkunde geheimnisvolle Welten und schreibe deine eigene Story.</p>
-              <div class="card-bottom"><span>★ Für Entdecker</span><a class="small-btn" href="#community">Entdecken ↗</a></div>
-            </div>
-          </article>
-          <article class="game-card">
-            <div class="game-art art-racing"><span class="tag">Racing</span><span aria-hidden="true">🏎️</span></div>
-            <div class="game-info">
-              <h3>Rennspiele</h3>
-              <p>Spüre die Geschwindigkeit und kämpfe um den ersten Platz.</p>
-              <div class="card-bottom"><span>★ Für Racer</span><a class="small-btn" href="#community">Entdecken ↗</a></div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="wrap" aria-label="Unsere Vorteile">
-      <div class="features">
-        <div class="feature"><div class="icon">⚡</div><h3>Volle Action</h3><p>Neue Ideen und spannende Spielmomente.</p></div>
-        <div class="feature"><div class="icon">♧</div><h3>Community</h3><p>Triff andere Gaming-Fans und tausche Tipps aus.</p></div>
-        <div class="feature"><div class="icon">⬡</div><h3>Fair Play</h3><p>Respekt und ein gutes Miteinander stehen im Fokus.</p></div>
-        <div class="feature"><div class="icon">▣</div><h3>Dein Setup</h3><p>PC, Konsole oder mobil — Gaming verbindet.</p></div>
-      </div>
-    </section>
-
-    <section class="wrap" id="about">
-      <div class="about">
-        <div>
-          <div class="kicker">Mehr als nur Spiele</div>
-          <h2>Das ist <span>NEXUS GAMING</span></h2>
-          <p>Ein Platz für alle, die Spiele lieben. Entdecke neue Genres, teile deine Erfahrungen und finde Inspiration für dein nächstes Abenteuer.</p>
-          <a class="btn primary" href="#community">Community entdecken →</a>
-        </div>
-        <div class="community-art" aria-label="Gaming Community Illustration"><span>⌁ GAME<br>TOGETHER ⌁</span></div>
-      </div>
-    </section>
-
-    <section class="wrap" id="community">
-      <div class="section-head">
-        <div>
-          <div class="kicker">Werde Teil davon</div>
-          <h2>Bereit für dein <span>nächstes Level?</span></h2>
-        </div>
-      </div>
-      <p style="color: var(--muted); max-width: 650px;">Diese Demo-Seite ist dein erster Schritt. Später kannst du hier echte Community-Links, Events und deine Lieblingsspiele eintragen.</p>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap footer-inner">
-      <a class="brand" href="#home">◆ NEXUS <span>GAMING</span></a>
-      <div>© 2026 NEXUS GAMING · Demo-Projekt</div>
-      <div class="socials"><a href="#community">Community</a><a href="#games">Spiele</a><a class="top" href="#home" aria-label="Nach oben">↑</a></div>
-    </div>
-  </footer>
-</body>
-</html>
+<header><div class="nav"><a class="logo" href="#home">✦ NEXUS <span>GAMING</span></a><nav id="nav"><a href="#home">Главная</a><a href="#games">Игры</a><a href="#community">Сообщество</a><a href="#about">О нас</a><a href="#contacts">Контакты</a></nav><button class="small" id="openSearch">⌕ Поиск</button><a class="btn" href="#games">🎮 Играть</a><button class="menu" id="menu">☰</button></div></header>
+<main id="home"><div class="hero"><div class="hero-inner"><div class="eyebrow">Добро пожаловать в</div><h1>NEXUS <span>GAMING</span></h1><h3>Больше, чем просто игры</h3><p>Место для настоящих геймеров. Открывай новые миры, находи игры по вкусу и делись игровыми открытиями с друзьями.</p><div class="actions"><a class="btn" href="#games">🎮 Найти игру</a><a class="btn alt" href="#about">Узнать больше →</a></div></div></div>
+<section id="games"><div class="heading"><div><div class="kicker">Наши категории</div><h2>Выбери свой стиль игры</h2></div><a href="#popular">Популярные игры ↓</a></div>
+<div class="grid">
+<article class="card"><img loading="lazy" alt="Игровой экшен" src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=85"><div class="body"><h3>⚔️ Экшен</h3><p>Динамичные сражения, адреналин и незабываемые моменты.</p><button class="small category" data-q="action games">Найти экшен →</button></div></article>
+<article class="card"><img loading="lazy" alt="Пейзаж для приключений" src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=85"><div class="body"><h3>🧭 Приключения</h3><p>Исследуй новые миры, открывай секреты и живи невероятные истории.</p><button class="small category" data-q="adventure games">Найти приключения →</button></div></article>
+<article class="card"><img loading="lazy" alt="Спортивный автомобиль" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=85"><div class="body"><h3>🏁 Гонки</h3><p>Почувствуй скорость, соревнуйся и стань лучшим на трассе.</p><button class="small category" data-q="racing games">Найти гонки →</button></div></article></div>
+<div class="features" id="about"><div class="feature">⚡<b>Быстрый старт</b><p>Легко найти следующую любимую игру.</p></div><div class="feature">♧<b>Играй с друзьями</b><p>Делись играми и идеями.</p></div><div class="feature">◇<b>Полезные подборки</b><p>Интересные игры в одном месте.</p></div><div class="feature">▣<b>На любом экране</b><p>Работает на ПК и телефоне.</p></div></div>
+<div class="popular" id="popular"><div><div class="kicker">Популярные игры</div><h2>Что стоит попробовать</h2><p>Нажми на карточку, чтобы открыть официальную страницу игры. Картинки загружаются из интернета.</p><button class="btn" id="all">Найти больше игр →</button></div><div class="games">
+<a class="game" href="https://www.fortnite.com/" target="_blank" rel="noopener"><img loading="lazy" alt="Игровой мир" src="https://images.unsplash.com/photo-1603481546238-487240415921?auto=format&fit=crop&w=500&q=80"><div>Fortnite<small>Экшен · Выживание</small></div></a>
+<a class="game" href="https://playvalorant.com/" target="_blank" rel="noopener"><img loading="lazy" alt="Киберспортивная игра" src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?auto=format&fit=crop&w=500&q=80"><div>Valorant<small>Шутер · Тактика</small></div></a>
+<a class="game" href="https://www.minecraft.net/" target="_blank" rel="noopener"><img loading="lazy" alt="Мир для исследования" src="https://images.unsplash.com/photo-1607513746994-51f730a44832?auto=format&fit=crop&w=500&q=80"><div>Minecraft<small>Песочница · Выживание</small></div></a>
+<a class="game" href="https://www.rockstargames.com/gta-v" target="_blank" rel="noopener"><img loading="lazy" alt="Ночной город" src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=500&q=80"><div>GTA V<small>Открытый мир · Экшен</small></div></a>
+</div></div><div class="community" id="community"><div class="kicker">Сообщество</div><h2>Играй. Исследуй. Побеждай.</h2><p>Позже сюда можно добавить твои обзоры, новости и ссылку на Discord-сервер.</p><button class="btn" id="join">Присоединиться ↗</button></div></section></main>
+<footer id="contacts"><div class="footer"><a class="logo" href="#home">✦ NEXUS <span>GAMING</span></a><span>© 2026 NEXUS GAMING · Учебный проект</span><span><a href="#home">Главная</a>　<a href="#games">Игры</a>　<a href="#community">Сообщество</a></span></div></footer>
+<div class="modal" id="modal"><div class="box"><div class="modalhead"><h2 id="modalTitle">Поиск по сайту</h2><button class="close" id="close">×</button></div><input class="search" id="query" placeholder="Например: гонки, Minecraft, экшен…"><div id="results"><a href="#games">Категории игр</a><a href="#popular">Популярные игры</a><a href="#community">Сообщество</a></div></div></div>
+<script>
+const nav=document.getElementById('nav'),modal=document.getElementById('modal'),query=document.getElementById('query'),results=document.getElementById('results');
+document.getElementById('menu').onclick=()=>nav.classList.toggle('open');nav.querySelectorAll('a').forEach(a=>a.onclick=()=>nav.classList.remove('open'));
+function showModal(title){document.getElementById('modalTitle').textContent=title;modal.classList.add('open')}
+document.getElementById('openSearch').onclick=()=>{showModal('Поиск по сайту');query.value='';results.innerHTML='<a href="#games">Категории игр</a><a href="#popular">Популярные игры</a><a href="#community">Сообщество</a>';query.focus()};
+document.getElementById('close').onclick=()=>modal.classList.remove('open');modal.onclick=e=>{if(e.target===modal)modal.classList.remove('open')};document.onkeydown=e=>{if(e.key==='Escape')modal.classList.remove('open')};
+query.oninput=()=>{const q=query.value.toLowerCase().trim();const matches=[...document.querySelectorAll('.card,.game,.community')].filter(el=>el.innerText.toLowerCase().includes(q));results.innerHTML='';if(!q){results.innerHTML='<a href="#games">Категории игр</a><a href="#popular">Популярные игры</a>';return}if(!matches.length){results.textContent='Ничего не найдено — попробуй другое слово.';return}matches.forEach(el=>{const a=document.createElement('a');a.href='#'+(el.classList.contains('game')?'popular':el.classList.contains('community')?'community':'games');a.textContent='→ '+el.querySelector('h3,div')?.innerText.split('\n')[0];a.onclick=()=>modal.classList.remove('open');results.appendChild(a)})};
+document.querySelectorAll('.category').forEach(b=>b.onclick=()=>{showModal('Игры категории');results.innerHTML='<p>Ищем подборку: '+b.previousElementSibling.previousElementSibling.textContent+'</p><a target="_blank" rel="noopener" href="https://www.google.com/search?q='+encodeURIComponent(b.dataset.q)+'">Открыть поиск игр в интернете ↗</a><a href="#popular" onclick="document.getElementById(\'modal\').classList.remove(\'open\')">Посмотреть популярные игры на сайте</a>'});
+document.getElementById('all').onclick=()=>{showModal('Больше игр');results.innerHTML='<a target="_blank" rel="noopener" href="https://www.google.com/search?q=best+PC+games">Лучшие игры для ПК ↗</a><a target="_blank" rel="noopener" href="https://www.google.com/search?q=best+PlayStation+5+games">Лучшие игры для PlayStation ↗</a><a target="_blank" rel="noopener" href="https://www.google.com/search?q=free+games">Бесплатные игры ↗</a>'};
+document.getElementById('join').onclick=()=>{showModal('Сообщество');results.innerHTML='<p>Сообщество пока в разработке. Когда создашь Discord-сервер или группу, сюда можно добавить настоящую ссылку.</p><a href="#contacts" onclick="document.getElementById(\'modal\').classList.remove(\'open\')">Перейти к контактам</a>'};
+</script></body></html>
